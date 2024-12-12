@@ -68,7 +68,13 @@ allow-hotplug eth0
 On reboot. 
 On lit la configuration prise par l'interface réseau avec la commande `ip a`dr ou `ifconfig`
 
-![WhatsApp Image 2024-12-02 at 15.30.15](/home/vincent/Documents/ese_3a/2425_linuxemb/assets/WhatsApp Image 2024-12-02 at 15.30.15.jpeg)
+![WhatsApp Image 2024-12-02 at 15.30.15](./assets/WhatsApp Image 2024-12-02 at 15.30.15.jpeg)
+
+Pour forcer la machine a reprendre une ipv4 par le dhc on utilise la commande suivante, on a récuéré l'ip 192.168..252 lors de la deuxième séance.
+
+```bash
+sudo dhclient 
+```
 
 Le ping dans les 2 sens fonctionne entre notre machine de dévellopement qui est sur le réseau Think
 dont le ssid est : 
@@ -194,19 +200,78 @@ Voici le résultat du chenillard en action et en images.
 
 #### 2.0. **Reprise du TP1**
 
+On recommence la manipulation de configuration ssh, on rencontre le problème d'attribution d'ipv4, corrigé par une attribution forcée d'ip avec dhclient:
+
+![image-20241212085020580](./assets/image-20241212085020580.png)
+
+On se connecte en ssh ensuite.
+
+```bash
+ssh root@192.168.0.252		
+```
+
+
+
 #### 2.1. **Accès aux registres**
 
 #### 2.2. **Compilation de module noyau sur la VM**
+
+On compile ici en utilisant le makefile en suivant le protocole suivant:
+
+```bash
+## Étape 1 : Compilation du module
+
+make #Génére hello.ko
+
+file hello.ko # On vérifie que le type soit bien ELF 64-bit LSB relocatable
+
+
+##Étape 2 : Chargement du module dans le noyau
+
+sudo insmod hello.ko #Chargement du module
+
+lsmod | grep hello #Verification avec lsmod
+
+sudo dmesg | tail # affichage des messages du noyau
+
+#Ensuite on décharge le module
+```
+
+![image-20241212103209333](./assets/image-20241212103209333.png)
+
+
 
 #### 2.3. **CrossCompilation de modules noyau**
 
 ###### 2.3.0. **Récupération du Noyau Terasic (c’est déjà fait dans la VM !)**
 
+question
+
 ###### 2.3.1. **Préparation de la compilation**
+
+
+
+Le chemin /usr/lib/arm-linux-gnueabihf-gcc
+
+![image-20241212094715287](./assets/image-20241212094715287.png)
 
 ###### 2.3.2. **Récupération de la configuration actuelle du noyau**
 
+![image-20241212113435544](./assets/image-20241212113435544.png)
+
+Quel est le rôle des lignes commençant par export ? 
+
+Pourquoi le chemin fini par un tiret "-" ?
+
+
+
 ###### 2.3.3. **Hello World**
+
+![image-20241212113416072](./assets/image-20241212113416072.png)
+
+
+
+
 
 ###### 2.3.4. **Chenillard (Yes !)**
 
