@@ -283,9 +283,11 @@ Le chemin `CROSS_COMPILE` se termine par un tiret `-` car cela permet à `make` 
 
 
 
-
-
 ###### 2.3.4. **Chenillard (Yes !)**
+
+
+
+
 
 
 
@@ -293,19 +295,23 @@ Le chemin `CROSS_COMPILE` se termine par un tiret `-` car cela permet à `make` 
 
 ### 3 **Device tree (TP3)** 
 
+Le Device Tree est une structure de données utilisée par le noyau Linux pour décrire le matériel d'un système embarqué. Dans les systèmes embarqués modernes, où les périphériques matériels sont souvent spécifiques et non détectables automatiquement, il joue un rôle central pour informer le noyau de la configuration matérielle présente.
+
+Dans cette partie, nous explorerons la structure du Device Tree, son rôle dans la gestion des périphériques, et comment l’utiliser pour interfacer des composants matériels tels que les LED sur la plateforme SoC FPGA.
+
+
+
 #### 3.1. **Module accédant au LED via /dev**
+
+
+
+
 
 #### 3.2. **Module final**
 
+
+
+
+
 #### 3.2.1. **Cahier des charges**
-
-
-
-
-
-### 4 **Petit projet : Afficheurs 7 segments** 
-
-#### 4.1. **Prise en main**
-
-#### 4.2. **Device Tree et module
 
