@@ -247,6 +247,8 @@ sudo dmesg | tail # affichage des messages du noyau
 
 question
 
+
+
 ###### 2.3.1. **Préparation de la compilation**
 
 
@@ -259,9 +261,19 @@ Le chemin /usr/lib/arm-linux-gnueabihf-gcc
 
 ![image-20241212113435544](./assets/image-20241212113435544.png)
 
-Quel est le rôle des lignes commençant par export ? 
+**Quel est le rôle des lignes commençant par export ?** 
 
-Pourquoi le chemin fini par un tiret "-" ?
+Les lignes `export` servent à  créer ou modifier des variables d’environnement dans le shell actuel. Ces variables sont ensuite accessibles par les sous-processus, comme les commandes `make` qui utilisent ces variables pour configurer la compilation.
+
+
+
+**Pourquoi le chemin fini par un tiret "-" ?**
+
+Le chemin `CROSS_COMPILE` se termine par un tiret `-` car cela permet à `make` et aux outils de compilation d’ajouter automatiquement les suffixes des outils nécessaires, comme :
+
+- `gcc` pour le compilateur,
+- `ld` pour l'éditeur de liens,
+- `as` pour l'assembleur.
 
 
 
@@ -275,6 +287,10 @@ Pourquoi le chemin fini par un tiret "-" ?
 
 ###### 2.3.4. **Chenillard (Yes !)**
 
+
+
+
+
 ### 3 **Device tree (TP3)** 
 
 #### 3.1. **Module accédant au LED via /dev**
@@ -283,12 +299,13 @@ Pourquoi le chemin fini par un tiret "-" ?
 
 #### 3.2.1. **Cahier des charges**
 
+
+
+
+
 ### 4 **Petit projet : Afficheurs 7 segments** 
 
 #### 4.1. **Prise en main**
 
-#### 4.2. **Device Tree et module**
+#### 4.2. **Device Tree et module
 
-------
-
-Ces titres peuvent être directement copiés et utilisés dans votre document ou plan de travail.
