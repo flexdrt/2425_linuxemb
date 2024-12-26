@@ -245,13 +245,16 @@ sudo dmesg | tail # affichage des messages du noyau
 
 ###### 2.3.0. **Récupération du Noyau Terasic (c’est déjà fait dans la VM !)**
 
-question
+Les deux commandes supplémentaires garantissent la compatibilité exacte avec le noyau de la carte VEEK :
+
+1. **`git checkout 6b20a2929d54`** : Positionne sur le commit spécifique utilisé pour compiler le noyau en cours sur la carte.
+2. **`git config core.abbrev 7`** : Configure Git pour afficher des hashes de 7 caractères, correspondant au format affiché par `uname -a`.
+
+Cela assure une cohérence entre les sources récupérées et le noyau installé.
 
 
 
 ###### 2.3.1. **Préparation de la compilation**
-
-
 
 Le chemin /usr/lib/arm-linux-gnueabihf-gcc
 
