@@ -1,6 +1,4 @@
 # 2425_linuxemb
-vincent lkme
-
 
 
 ### 1.**Prise en main**
@@ -47,11 +45,11 @@ On reboot et on observe la taille occupée par l'image
 df -h
 ```
 
-![WhatsApp Image 2024-12-02 at 15.12.18](/home/vincent/Documents/ese_3a/2425_linuxemb/assets/WhatsApp Image 2024-12-02 at 15.12.18.jpeg)
+![WhatsApp Image 2024-12-02 at 15.12.18](./assets/WhatsApp%20Image%202024-12-02%20at%2015.12.18.jpeg)
 
+Notre image occupe ici 1.3 Go.
 
-
- On essaie d'occuper tout l'espace disponible en lançant un script `./expand_rootfs.sh`
+On essaie d'occuper tout l'espace disponible en lançant un script `./expand_rootfs.sh`
 
 On reboot et on lance le script `./resize2fs_once`
 
@@ -77,9 +75,6 @@ sudo dhclient
 ```
 
 Le ping dans les 2 sens fonctionne entre notre machine de dévellopement qui est sur le réseau Think
-dont le ssid est : 
-
-
 
 On va activer le ssh afin de pouvoir se passer de la liaison série. Pour cela on ajoute dans le fichier `/etc/ssh/sshd_config` la ligne suivante
 
@@ -87,17 +82,11 @@ On va activer le ssh afin de pouvoir se passer de la liaison série. Pour cela o
 PermitEmptyPasswords yes
 ```
 
-
-
 en ssh dans putty ou dans un terminal linux on se connecte en ssh avec 
 
 ```
 ssh root@192.168.0.
 ```
-
-
-
-
 
 ou si l'adresse ip de la carte a cahngé pour quelque raisons que ce soit par exemple, on a pu essayer avec cette autre adresse ip
 
@@ -111,7 +100,7 @@ ssh root@192.168.0.
 
 ##### 1.4.1. **Exploration des dossiers /sys/class et /proc**
 
-O explore les répertoires de la carte, on peut lire ce qu'ils contiennent dans les captures suivantes :
+On explore les répertoires de la carte, on peut lire ce qu'ils contiennent dans les captures suivantes :
 
 —/proc : cpuinfo, ioports, iomem
 
@@ -120,17 +109,17 @@ O explore les répertoires de la carte, on peut lire ce qu'ils contiennent dans 
 — /proc/iomem
 — /proc/device-tree/sopc@0 à comparer avec le fichier iomem.
 
+
+
 ##### 1.4.2. **Compilation croisée**
 
 On utilise la VM prévue à cet effet, avec un dossier partagé, pour compiler nos fichier sources à l'aide du compilateur arm-linux-gnueabihf-gcc. 
 
+
+
 ##### 1.4.3. **Hello world !**
 
-
-
-On test la cross-compilation avec un fichier qui doit afficher hello world! lorsque l'on lance le programme 
-
-fichier hello.c 
+On ne peut pas executer directement l'executable, il faut passer par une cross complation de notre hello world.
 
 ```c
 #include <stdio.h>
@@ -155,7 +144,7 @@ scp /home/ensea/src/hello.c root@IP_DE_LA_CARTE_SOC:/home/root/hello
 
 Le téléchargement se lit en bas de la capture suivante
 
-![WhatsApp Image 2024-12-02 at 16.32.55](/home/vincent/Documents/ese_3a/2425_linuxemb/assets/WhatsApp Image 2024-12-02 at 16.32.55.jpeg)
+![WhatsApp Image 2024-12-02 at 16.32.55](./assets/WhatsApp%20Image%202024-12-02%20at%2016.32.55.jpeg)
 
 On rend exécutable ce fichier avec la commande  
 
@@ -167,7 +156,7 @@ Et on lance le programme avec `./hello`
 
 On peut voir le chmod et le lancement du programme sur la capture suivante.
 
-##### ![WhatsApp Image 2024-12-02 at 16.31.18](/home/vincent/Documents/ese_3a/2425_linuxemb/assets/WhatsApp Image 2024-12-02 at 16.31.18.jpeg)
+##### ![WhatsApp Image 2024-12-02 at 16.31.18](./assets/WhatsApp%20Image%202024-12-02%20at%2016.31.18.jpeg)
 
 ##### 1.4.4. **Accès au matériel**
 
@@ -182,10 +171,6 @@ echo "1" > /sys/class/leds/fpga_led1/brightness
 ##### 1.4.5. **Chenillard (Et oui, encore !)**
 
 ![image-20241202173158371](./assets/image-20241202173158371.png)
-
-
-
-
 
 ![image-20241202173201549](./assets/image-20241202173201549.png)
 
@@ -213,6 +198,14 @@ ssh root@192.168.0.252
 
 
 #### 2.1. **Accès aux registres**
+
+Les mappages mémoire, alignés sur des pages (4 Ko typiquement), peuvent entraîner un gaspillage d'espace pour des petites zones (ex. : un mappage de 7 octets gaspille 4089 octets). 
+
+En architecture 32 bits, ils risquent aussi de fragmenter l'espace d'adressage, limitant les grandes zones contiguës disponibles, un problème atténué avec 64 bits. 
+
+Enfin, la gestion des mappages ajoute une surcharge pour le noyau. Ces limites générales s’ajoutent aux risques spécifiques liés à **`mmap()`** pour le matériel, comme l'absence de sécurité et les conflits potentiels avec d'autres processus.
+
+
 
 #### 2.2. **Compilation de module noyau sur la VM**
 
@@ -266,9 +259,9 @@ Le chemin /usr/lib/arm-linux-gnueabihf-gcc
 
 **Quel est le rôle des lignes commençant par export ?** 
 
-Les lignes `export` servent à  créer ou modifier des variables d’environnement dans le shell actuel. Ces variables sont ensuite accessibles par les sous-processus, comme les commandes `make` qui utilisent ces variables pour configurer la compilation.
+Les lignes `export` servent à  créer ou modifier des variables d’environnement dans le shell actuel. 
 
-
+Ces variables sont ensuite accessibles par les sous-processus, comme les commandes `make` qui utilisent ces variables pour configurer la compilation.
 
 **Pourquoi le chemin fini par un tiret "-" ?**
 
@@ -284,15 +277,13 @@ Le chemin `CROSS_COMPILE` se termine par un tiret `-` car cela permet à `make` 
 
 ![image-20241212113416072](./assets/image-20241212113416072.png)
 
+Le module est ici compilé
+
 
 
 ###### 2.3.4. **Chenillard (Yes !)**
 
-
-
-
-
-
+Ce code implémente un chenillard simple avec un modèle configurable via une interface `/proc/ensea/chenille`. Les paramètres peuvent être ajustés dynamiquement, et le déplacement du pattern est géré par un timer périodique.
 
 
 
@@ -306,15 +297,13 @@ Dans cette partie, nous explorerons la structure du Device Tree, son rôle dans 
 
 #### 3.1. **Module accédant au LED via /dev**
 
+**La fonction `probe`** : Elle est appelée une seule fois lorsque le noyau détecte le périphérique des LED. Cette fonction est responsable de réserver la mémoire nécessaire, de créer une structure pour stocker les informations liées au périphérique (comme les registres), d'allumer les LED par défaut, et d'initialiser le périphérique via un misc device.
+
+**La fonction `read`** : Elle permet de lire la valeur actuelle des LED au moment de son appel, fournissant un état instantané.
+
+**La fonction `write`** : Elle sert à modifier la valeur des LED en écrivant dans les registres correspondants.
+
+**La fonction `remove`** : Elle est exécutée lorsque le périphérique est retiré ou n'existe plus. Elle permet de nettoyer les ressources utilisées par le pilote, comme la mémoire réservée.
 
 
-
-
-#### 3.2. **Module final**
-
-
-
-
-
-#### 3.2.1. **Cahier des charges**
 
